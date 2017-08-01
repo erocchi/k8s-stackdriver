@@ -24,6 +24,7 @@ import (
 	"github.com/GoogleCloudPlatform/k8s-stackdriver/event-adapter/pkg/types"
 )
 
+
 // REST is a wrapper for EventsProvider that provides implementation for Storage and Lister interfaces
 type REST struct {
 	evProvider provider.EventsProvider
@@ -31,6 +32,7 @@ type REST struct {
 
 var _ rest.Storage = &REST{}
 var _ rest.Lister = &REST{}
+
 
 // Creates a new REST for the given EventsProvider
 func NewREST(evProvider provider.EventsProvider) *REST {
@@ -48,6 +50,7 @@ func (r *REST) New() runtime.Object {
 func (r *REST) NewList() runtime.Object {
 	return &types.EventValueList{}
 }
+
 
 // Select the events that match to the selector
 func (r *REST) List(ctx genericapirequest.Context, options *metainternalversion.ListOptions) (runtime.Object, error) {

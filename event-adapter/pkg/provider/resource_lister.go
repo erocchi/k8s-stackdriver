@@ -18,10 +18,12 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-//
+
+
 type eventsResourceLister struct {
 	provider EventsProvider
 }
+
 
 // Creates a new APIResourceLister for provided EventsProvider
 func NewResourceLister(provider EventsProvider) handlers.APIResourceLister {

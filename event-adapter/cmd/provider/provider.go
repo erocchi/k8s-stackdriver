@@ -26,7 +26,10 @@ import (
 
 type sdService stackdriver.Service
 
+<<<<<<< HEAD
 // Provider for Stackdriver
+=======
+>>>>>>> d0e2601fca850f93dce4129c5342113cb57495d2
 type StackdriverProvider struct {
 	restClient rest.Interface
 
@@ -42,7 +45,10 @@ type StackdriverProvider struct {
 
 //TODO type Stackdriver interface {}
 
+<<<<<<< HEAD
 // Create a new Provider with standard settings
+=======
+>>>>>>> d0e2601fca850f93dce4129c5342113cb57495d2
 func NewStackdriverProvider(restClient rest.Interface, stackdriverService *stackdriver.Service, rateInterval time.Duration) provider.EventsProvider {
 	gceConf, err := config.GetGceConfig("container.googleapis.com")
 	if err != nil {
@@ -57,7 +63,10 @@ func NewStackdriverProvider(restClient rest.Interface, stackdriverService *stack
 	}
 }
 
+<<<<<<< HEAD
 // Get the information of the given event
+=======
+>>>>>>> d0e2601fca850f93dce4129c5342113cb57495d2
 func (p *StackdriverProvider) GetNamespacedEventsByName( namespace, eventName string) (*types.EventValue, error){
 	return nil,fmt.Errorf("Failed to find the vent: (namespace: %s, eventName: %s)", namespace, eventName)
 }

@@ -22,6 +22,7 @@ import (
 	"github.com/GoogleCloudPlatform/k8s-stackdriver/event-adapter/pkg/apiserver"
 )
 
+
 // It stores a configuration for events adapter
 type EventsAdapterServerOptions struct {
 	// genericoptions.ReccomendedOptions - EtcdOptions
@@ -33,6 +34,7 @@ type EventsAdapterServerOptions struct {
 	StdOut io.Writer
 	StdErr io.Writer
 }
+
 
 // Creates a EventsAdapterServerOptions for provided output interface
 func NewEventsAdapterServerOptions(out, errOut io.Writer) *EventsAdapterServerOptions {
@@ -53,6 +55,7 @@ func NewEventsAdapterServerOptions(out, errOut io.Writer) *EventsAdapterServerOp
 func (o EventsAdapterServerOptions) Validate(args []string) error {
 	return nil
 }
+
 
 // Setting the server
 func (o *EventsAdapterServerOptions) Complete() error {

@@ -18,14 +18,20 @@ import (
 	"github.com/GoogleCloudPlatform/k8s-stackdriver/event-adapter/pkg/types"
 )
 
+<<<<<<< HEAD
 // Info relevant for an Event
+=======
+>>>>>>> d0e2601fca850f93dce4129c5342113cb57495d2
 type EventInfo struct {
 	GroupResource          schema.GroupResource
 	Namespaced             bool
 	Event                  string
 }
 
+<<<<<<< HEAD
 // Interfaces that contains the methods that will provide info for the given events
+=======
+>>>>>>> d0e2601fca850f93dce4129c5342113cb57495d2
 type EventsProvider interface {
 	GetNamespacedEventsByName( namespace, eventName string) (*types.EventValue, error)
 }

@@ -56,7 +56,6 @@ func (s *EventsAdapterServer) InstallEventsAPI() error {
 	return nil
 }
 
-
 func (s *EventsAdapterServer) evAPI(groupMeta *apimachinery.GroupMeta, groupVersion *schema.GroupVersion) *specificapi.EventsAPIGroupVersion {
 	resourceStorage := storage.NewREST(s.Provider)
 

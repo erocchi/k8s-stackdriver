@@ -22,6 +22,7 @@ import (
 	"k8s.io/client-go/pkg/api/v1"
 )
 
+
 // List of events
 type EventValueList struct {
 	metav1.TypeMeta `json:",inline"`
@@ -30,6 +31,7 @@ type EventValueList struct {
 
 	Items []EventValue `json:"items" protobuf:"bytes,2,rep,name=items"`
 }
+
 
 // It stands for an event
 type EventValue struct {
@@ -48,6 +50,7 @@ type EventValue struct {
 
 	Value resource.Quantity `json:"value" protobuf:"bytes,5,name=value"`
 }
+
 
 // All possible events name
 const AllObjects = "*"
