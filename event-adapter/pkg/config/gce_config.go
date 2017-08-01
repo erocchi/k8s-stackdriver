@@ -21,10 +21,10 @@ import (
 
 // GceConfig aggregates all GCE related configuration parameters.
 type GceConfig struct {
-	Project			 string
-	Zone					string
-	Cluster			 string
-	Instance			string
+	Project      string
+	Zone         string
+	Cluster      string
+	Instance     string
 	EventsPrefix string
 }
 
@@ -55,10 +55,10 @@ func GetGceConfig(eventsPrefix string) (*GceConfig, error) {
 	}
 
 	return &GceConfig{
-		Project:			 project,
-		Zone:					zone,
-		Cluster:			 cluster,
-		Instance:			instance,
+		Project:      project,
+		Zone:         zone,
+		Cluster:      cluster,
+		Instance:     instance,
 		EventsPrefix: eventsPrefix,
 	}, nil
 }

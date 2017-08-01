@@ -14,19 +14,21 @@ limitations under the License.
 package provider
 
 import (
-	"k8s.io/apimachinery/pkg/runtime/schema"
 	"github.com/GoogleCloudPlatform/k8s-stackdriver/event-adapter/pkg/types"
+	"k8s.io/apimachinery/pkg/runtime/schema"
 )
 
-
-// Info relevant for an Event
+// EventInfo contains info relevant for an Event
 type EventInfo struct {
-	GroupResource          schema.GroupResource
-	Namespaced             bool
-	Event                  string
+	// GroupResource is the group of the resources
+	GroupResource schema.GroupResource
+	// Namespaced will be true if the event will be namespaced
+	Namespaced bool
+	// Event will contain the name of the event
+	Event string
 }
 
-// Interfaces that contains the methods that will provide info for the given events
+// EventsProvider is an interface that contains the methods that will provide info for the given events
 type EventsProvider interface {
-	GetNamespacedEventsByName( namespace, eventName string) (*types.EventValue, error)
+	GetNamespacedEventsByName(namespace, eventName string) (*types.EventValue, error)
 }

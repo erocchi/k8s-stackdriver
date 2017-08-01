@@ -14,23 +14,23 @@ limitations under the License.
 package server
 
 import (
-	"io"
 	"fmt"
+	"io"
 
 	"github.com/spf13/cobra"
+	stackdriver "google.golang.org/api/monitoring/v3"
+	coreclient "k8s.io/client-go/kubernetes/typed/core/v1"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
-	coreclient "k8s.io/client-go/kubernetes/typed/core/v1"
-	stackdriver "google.golang.org/api/monitoring/v3"
 
-	"github.com/GoogleCloudPlatform/k8s-stackdriver/event-adapter/pkg/cmd/server"
 	"github.com/GoogleCloudPlatform/k8s-stackdriver/event-adapter/cmd/provider"
-	"time"
+	"github.com/GoogleCloudPlatform/k8s-stackdriver/event-adapter/pkg/cmd/server"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
+	"time"
 )
 
-// NewCommandStartMaster provides a CLI handler for 'start master' command
+// NewCommandStartSampleAdapterServer provides a CLI handler for 'start master' command
 func NewCommandStartSampleAdapterServer(out, errOut io.Writer, stopCh <-chan struct{}) *cobra.Command {
 	baseOpts := server.NewEventsAdapterServerOptions(out, errOut)
 	o := SampleAdapterServerOptions{
@@ -67,7 +67,7 @@ func NewCommandStartSampleAdapterServer(out, errOut io.Writer, stopCh <-chan str
 	return cmd
 }
 
-// Runs Events adapter API server
+// RunEventsAdapterServer runs Events adapter API server
 func (o SampleAdapterServerOptions) RunEventsAdapterServer(stopCh <-chan struct{}) error {
 	config, err := o.Config()
 	if err != nil {
@@ -96,7 +96,7 @@ func (o SampleAdapterServerOptions) RunEventsAdapterServer(stopCh <-chan struct{
 	if err != nil {
 		return fmt.Errorf("Failed to create Stackdriver client: %v", err)
 	}
-	evProvider := provider.NewStackdriverProvider(client.RESTClient(), stackdriverService, 5 * time.Minute)
+	evProvider := provider.NewStackdriverProvider(client.RESTClient(), stackdriverService, 5*time.Minute)
 
 	server, err := config.Complete().New(evProvider)
 	if err != nil {
@@ -105,7 +105,7 @@ func (o SampleAdapterServerOptions) RunEventsAdapterServer(stopCh <-chan struct{
 	return server.GenericAPIServer.PrepareRun().Run(stopCh)
 }
 
-// Contains sample EventsAdapterServerOptions
+// SampleAdapterServerOptions contains sample EventsAdapterServerOptions
 type SampleAdapterServerOptions struct {
 	*server.EventsAdapterServerOptions
 

@@ -18,9 +18,9 @@ import (
 	"os"
 	"runtime"
 
+	"github.com/GoogleCloudPlatform/k8s-stackdriver/event-adapter/cmd/server"
 	"k8s.io/apimachinery/pkg/util/wait"
 	"k8s.io/apiserver/pkg/util/logs"
-	"github.com/GoogleCloudPlatform/k8s-stackdriver/event-adapter/cmd/server"
 )
 
 func main() {

@@ -14,32 +14,29 @@ limitations under the License.
 package provider
 
 import (
-	"k8s.io/apiserver/pkg/endpoints/handlers"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apiserver/pkg/endpoints/handlers"
 )
-
-
 
 type eventsResourceLister struct {
 	provider EventsProvider
 }
 
-
-// Creates a new APIResourceLister for provided EventsProvider
+// NewResourceLister creates a new APIResourceLister for provided EventsProvider
 func NewResourceLister(provider EventsProvider) handlers.APIResourceLister {
 	return &eventsResourceLister{
 		provider: provider,
 	}
 }
 
-// It lists the supported API
+// ListAPIResources lists the supported API
 func (l *eventsResourceLister) ListAPIResources() []metav1.APIResource {
 	resources := make([]metav1.APIResource, 1)
-	resources[0] = metav1.APIResource{		//TODO chgNmGroup
-		Name: "namespace/{namespaces}/events/{eventName}",
+	resources[0] = metav1.APIResource{ //TODO chgNmGroup
+		Name:       "namespace/{namespaces}/events/{eventName}",
 		Namespaced: true,
-		Kind: "EventsList",
-		Verbs: metav1.Verbs{"get"},
+		Kind:       "EventsList",
+		Verbs:      metav1.Verbs{"get"},
 	}
 
 	return resources

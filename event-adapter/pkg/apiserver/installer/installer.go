@@ -32,10 +32,10 @@ import (
 	utilerrors "k8s.io/apimachinery/pkg/util/errors"
 	"k8s.io/apiserver/pkg/endpoints"
 	"k8s.io/apiserver/pkg/endpoints/handlers"
-	"k8s.io/apiserver/pkg/endpoints/handlers/negotiation" 
+	"k8s.io/apiserver/pkg/endpoints/handlers/negotiation"
 	//"k8s.io/apiserver/pkg/endpoints/metrics"
-	"k8s.io/apiserver/pkg/registry/rest"
 	"k8s.io/apiserver/pkg/endpoints/request"
+	"k8s.io/apiserver/pkg/registry/rest"
 
 	"github.com/emicklei/go-restful"
 
@@ -59,7 +59,7 @@ type EventsAPIGroupVersion struct {
 	*endpoints.APIGroupVersion
 }
 
-// InstallDynamicREST registers the dynamic REST handlers into a restful Container.
+// InstallREST registers the dynamic REST handlers into a restful Container.
 // It is expected that the provided path root prefix will serve all operations.  Root MUST
 // NOT end in a slash.  It should mirror InstallREST in the plain APIGroupVersion.
 func (g *EventsAPIGroupVersion) InstallREST(container *restful.Container) error {
@@ -98,8 +98,8 @@ type EventsAPIInstaller struct {
 	prefix            string // Path prefix where API resources are to be registered.
 	minRequestTimeout time.Duration
 
-				 // TODO: do we want to embed a normal API installer here so we can serve normal
-				 // endpoints side by side with dynamic ones (from the same API group)?
+	// TODO: do we want to embed a normal API installer here so we can serve normal
+	// endpoints side by side with dynamic ones (from the same API group)?
 }
 
 // Install installs handlers for API resources.
@@ -185,7 +185,7 @@ func (a *EventsAPIInstaller) registerResourceHandlers(storage rest.Storage, ws *
 		ctx = request.WithUserAgent(ctx, req.HeaderParameter("User-Agent"))
 		name := req.PathParameter("name")
 		resource := req.PathParameter("resource")
-		ctx = specificcontext.WithResourceInformation(ctx, resource,name)
+		ctx = specificcontext.WithResourceInformation(ctx, resource, name)
 
 		return ctx
 	}
@@ -262,12 +262,12 @@ func (a *EventsAPIInstaller) registerResourceHandlers(storage rest.Storage, ws *
 }
 
 // This magic incantation returns *ptrToObject for an arbitrary pointer
-func indirectArbitraryPointer(ptrToObject interface{}) interface{} {	//usato
+func indirectArbitraryPointer(ptrToObject interface{}) interface{} { //usato
 	return reflect.Indirect(reflect.ValueOf(ptrToObject)).Interface()
 }
 
 // getResourceKind returns the external group version kind registered for the given storage object.
-func (a *EventsAPIInstaller) getResourceKind(storage rest.Storage) (schema.GroupVersionKind, error) {	//usato
+func (a *EventsAPIInstaller) getResourceKind(storage rest.Storage) (schema.GroupVersionKind, error) { //usato
 	object := storage.New()
 	fqKinds, _, err := a.group.Typer.ObjectKinds(object)
 	if err != nil {
@@ -296,7 +296,7 @@ func (a *EventsAPIInstaller) getResourceKind(storage rest.Storage) (schema.Group
 }
 
 // restMapping returns rest mapper for the resource provided by DynamicStorage.
-func (a *EventsAPIInstaller) restMapping() (*meta.RESTMapping, error) {	//usato
+func (a *EventsAPIInstaller) restMapping() (*meta.RESTMapping, error) { //usato
 	// subresources must have parent resources, and follow the namespacing rules of their parent.
 	// So get the storage of the resource (which is the parent resource in case of subresources)
 	fqKindToRegister, err := a.getResourceKind(a.group.DynamicStorage)
