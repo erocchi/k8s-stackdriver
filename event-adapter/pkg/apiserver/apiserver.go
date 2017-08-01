@@ -14,6 +14,8 @@ limitations under the License.
 package apiserver
 
 import (
+	"github.com/GoogleCloudPlatform/k8s-stackdriver/event-adapter/pkg/provider"
+	"github.com/GoogleCloudPlatform/k8s-stackdriver/event-adapter/pkg/types"
 	"k8s.io/apimachinery/pkg/apimachinery/announced"
 	"k8s.io/apimachinery/pkg/apimachinery/registered"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -22,15 +24,15 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/serializer"
 	"k8s.io/apimachinery/pkg/version"
 	genericapiserver "k8s.io/apiserver/pkg/server"
-	"github.com/GoogleCloudPlatform/k8s-stackdriver/event-adapter/pkg/provider"
-	"github.com/GoogleCloudPlatform/k8s-stackdriver/event-adapter/pkg/types"
 )
 
 var (
 	groupFactoryRegistry = make(announced.APIGroupFactoryRegistry)
 	registry             = registered.NewOrDie("")
-	Scheme               = runtime.NewScheme()
-	Codecs               = serializer.NewCodecFactory(Scheme)
+	// Scheme is a new scheme
+	Scheme = runtime.NewScheme()
+	// Codecs is a new CodecFactory
+	Codecs = serializer.NewCodecFactory(Scheme)
 )
 
 func init() {
@@ -50,7 +52,6 @@ func init() {
 		&metav1.APIResourceList{},
 	)
 }
-
 
 // Config contains a configuration for the api server
 type Config struct {
@@ -93,7 +94,7 @@ func (c completedConfig) New(evProvider provider.EventsProvider) (*EventsAdapter
 
 	s := &EventsAdapterServer{
 		GenericAPIServer: genericServer,
-		Provider: evProvider,
+		Provider:         evProvider,
 	}
 
 	if err := s.InstallEventsAPI(); err != nil {

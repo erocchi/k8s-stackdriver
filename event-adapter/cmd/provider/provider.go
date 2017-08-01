@@ -14,19 +14,19 @@ limitations under the License.
 package provider
 
 import (
-	"time"
 	"fmt"
-	"github.com/golang/glog"
-	"k8s.io/client-go/rest"
-	stackdriver "google.golang.org/api/monitoring/v3"
-	"github.com/GoogleCloudPlatform/k8s-stackdriver/event-adapter/pkg/provider"
 	"github.com/GoogleCloudPlatform/k8s-stackdriver/event-adapter/pkg/config"
+	"github.com/GoogleCloudPlatform/k8s-stackdriver/event-adapter/pkg/provider"
 	"github.com/GoogleCloudPlatform/k8s-stackdriver/event-adapter/pkg/types"
+	"github.com/golang/glog"
+	stackdriver "google.golang.org/api/monitoring/v3"
+	"k8s.io/client-go/rest"
+	"time"
 )
 
 type sdService stackdriver.Service
 
-// Provider for Stackdriver
+// StackdriverProvider provide all the info for Stackdriver
 type StackdriverProvider struct {
 	restClient rest.Interface
 
@@ -39,10 +39,9 @@ type StackdriverProvider struct {
 	rateInterval time.Duration
 }
 
-
 //TODO type Stackdriver interface {}
 
-// Create a new Provider with standard settings
+// NewStackdriverProvider create a new Provider with standard settings
 func NewStackdriverProvider(restClient rest.Interface, stackdriverService *stackdriver.Service, rateInterval time.Duration) provider.EventsProvider {
 	gceConf, err := config.GetGceConfig("container.googleapis.com")
 	if err != nil {
@@ -50,14 +49,14 @@ func NewStackdriverProvider(restClient rest.Interface, stackdriverService *stack
 	}
 
 	return &StackdriverProvider{
-		restClient: restClient,
-		values: make(map[provider.EventInfo]map[string]int64),
-		config: gceConf,
+		restClient:   restClient,
+		values:       make(map[provider.EventInfo]map[string]int64),
+		config:       gceConf,
 		rateInterval: rateInterval,
 	}
 }
 
-// Get the information of the given event
-func (p *StackdriverProvider) GetNamespacedEventsByName( namespace, eventName string) (*types.EventValue, error){
-	return nil,fmt.Errorf("Failed to find the vent: (namespace: %s, eventName: %s)", namespace, eventName)
+// GetNamespacedEventsByName get the information of the given event
+func (p *StackdriverProvider) GetNamespacedEventsByName(namespace, eventName string) (*types.EventValue, error) {
+	return nil, fmt.Errorf("Failed to find the vent: (namespace: %s, eventName: %s)", namespace, eventName)
 }

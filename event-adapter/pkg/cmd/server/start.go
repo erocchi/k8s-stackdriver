@@ -15,15 +15,14 @@ package server
 
 import (
 	"fmt"
+	"github.com/GoogleCloudPlatform/k8s-stackdriver/event-adapter/pkg/apiserver"
 	"io"
-	"net"
 	genericapiserver "k8s.io/apiserver/pkg/server"
 	genericoptions "k8s.io/apiserver/pkg/server/options"
-	"github.com/GoogleCloudPlatform/k8s-stackdriver/event-adapter/pkg/apiserver"
+	"net"
 )
 
-
-// It stores a configuration for events adapter
+// EventsAdapterServerOptions stores a configuration for events adapter
 type EventsAdapterServerOptions struct {
 	// genericoptions.ReccomendedOptions - EtcdOptions
 	SecureServing  *genericoptions.SecureServingOptions
@@ -35,8 +34,7 @@ type EventsAdapterServerOptions struct {
 	StdErr io.Writer
 }
 
-
-// Creates a EventsAdapterServerOptions for provided output interface
+// NewEventsAdapterServerOptions creates a EventsAdapterServerOptions for provided output interface
 func NewEventsAdapterServerOptions(out, errOut io.Writer) *EventsAdapterServerOptions {
 	o := &EventsAdapterServerOptions{
 		SecureServing:  genericoptions.NewSecureServingOptions(),
@@ -51,18 +49,17 @@ func NewEventsAdapterServerOptions(out, errOut io.Writer) *EventsAdapterServerOp
 	return o
 }
 
-// Setting the server
+// Validate is setting the server
 func (o EventsAdapterServerOptions) Validate(args []string) error {
 	return nil
 }
 
-
-// Setting the server
+// Complete is setting the server
 func (o *EventsAdapterServerOptions) Complete() error {
 	return nil
 }
 
-// Setting the server
+// Config sets the server
 func (o EventsAdapterServerOptions) Config() (*apiserver.Config, error) {
 	// TODO have a "real" external address (have an AdvertiseAddress?)
 	if err := o.SecureServing.MaybeDefaultWithSelfSignedCerts("localhost", nil, []net.IP{net.ParseIP("127.0.0.1")}); err != nil {

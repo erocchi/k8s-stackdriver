@@ -14,18 +14,18 @@ limitations under the License.
 package apiserver
 
 import (
+	specificapi "github.com/GoogleCloudPlatform/k8s-stackdriver/event-adapter/pkg/apiserver/installer"
+	"github.com/GoogleCloudPlatform/k8s-stackdriver/event-adapter/pkg/provider"
+	storage "github.com/GoogleCloudPlatform/k8s-stackdriver/event-adapter/pkg/registry"
 	"k8s.io/apimachinery/pkg/apimachinery"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	genericapi "k8s.io/apiserver/pkg/endpoints"
 	genericapiserver "k8s.io/apiserver/pkg/server"
-	specificapi "github.com/GoogleCloudPlatform/k8s-stackdriver/event-adapter/pkg/apiserver/installer"
-	"github.com/GoogleCloudPlatform/k8s-stackdriver/event-adapter/pkg/provider"
-	storage "github.com/GoogleCloudPlatform/k8s-stackdriver/event-adapter/pkg/registry"
 )
 
-// It registers the api server in Kube Aggregator
+// InstallEventsAPI registers the api server in Kube Aggregator
 func (s *EventsAdapterServer) InstallEventsAPI() error {
 
 	groupMeta := registry.GroupOrDie("v1events") //TODO chgNmGroup

@@ -15,15 +15,14 @@ package registry
 
 import (
 	"fmt"
+	specificinstaller "github.com/GoogleCloudPlatform/k8s-stackdriver/event-adapter/pkg/apiserver/installer/context"
+	"github.com/GoogleCloudPlatform/k8s-stackdriver/event-adapter/pkg/provider"
+	"github.com/GoogleCloudPlatform/k8s-stackdriver/event-adapter/pkg/types"
 	metainternalversion "k8s.io/apimachinery/pkg/apis/meta/internalversion"
 	"k8s.io/apimachinery/pkg/runtime"
 	genericapirequest "k8s.io/apiserver/pkg/endpoints/request"
 	"k8s.io/apiserver/pkg/registry/rest"
-	specificinstaller "github.com/GoogleCloudPlatform/k8s-stackdriver/event-adapter/pkg/apiserver/installer/context"
-	"github.com/GoogleCloudPlatform/k8s-stackdriver/event-adapter/pkg/provider"
-	"github.com/GoogleCloudPlatform/k8s-stackdriver/event-adapter/pkg/types"
 )
-
 
 // REST is a wrapper for EventsProvider that provides implementation for Storage and Lister interfaces
 type REST struct {
@@ -33,26 +32,24 @@ type REST struct {
 var _ rest.Storage = &REST{}
 var _ rest.Lister = &REST{}
 
-
-// Creates a new REST for the given EventsProvider
+// NewREST creates a new REST for the given EventsProvider
 func NewREST(evProvider provider.EventsProvider) *REST {
 	return &REST{
 		evProvider: evProvider,
 	}
 }
 
-// Implement Storage
+// New implements Storage
 func (r *REST) New() runtime.Object {
 	return &types.EventValue{}
 }
 
-// Implement Lister
+// NewList implement Lister
 func (r *REST) NewList() runtime.Object {
 	return &types.EventValueList{}
 }
 
-
-// Select the events that match to the selector
+// List selects the events that match to the selector
 func (r *REST) List(ctx genericapirequest.Context, options *metainternalversion.ListOptions) (runtime.Object, error) {
 	namespace := genericapirequest.NamespaceValue(ctx)
 
@@ -65,6 +62,6 @@ func (r *REST) List(ctx genericapirequest.Context, options *metainternalversion.
 		return nil, fmt.Errorf("Usage : namespaces/{namespace}/events/{eventName}")
 	}
 
-	_, err := r.evProvider.GetNamespacedEventsByName(namespace,eventName)
+	_, err := r.evProvider.GetNamespacedEventsByName(namespace, eventName)
 	return nil, err
 }
