@@ -40,5 +40,4 @@ func (l *eventsResourceLister) ListAPIResources() []metav1.APIResource {
 	}
 
 	return resources
-
 }
