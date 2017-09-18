@@ -1,6 +1,7 @@
 OUT_DIR = build
 PACKAGE = k8s.io/event-adapter
-PREFIX = gcr.io/erocchi-gke-dev-1attempt
+PREFIX = gcr.io
+GCP_PROJECT ?= google-containers
 TAG = 1.0
 
 PKG := $(shell find pkg/* -type f)
@@ -12,10 +13,10 @@ build/adapter: adapter.go $(PKG) $(CMD)
 	go build -a -o $(OUT_DIR)/adapter adapter.go
 
 docker: build/adapter
-	docker build --pull -t ${PREFIX}/event-adapter:$(TAG) .
+	docker build --pull -t ${PREFIX}/${GCP_PROJECT}/event-adapter:$(TAG) .
 
 push: docker
-	gcloud docker -- push ${PREFIX}/event-adapter:$(TAG)
+	gcloud docker -- push ${PREFIX}/${GCP_PROJECT}/event-adapter:$(TAG)
 
 test:
 	go test ./...
